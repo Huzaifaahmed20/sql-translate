@@ -4,19 +4,21 @@ import React, { useState } from 'react';
 import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
 
 export default function SqlTableInputs() {
-  const [tableInputs, setTableInputs] = useState([
-    { query: 'Employee(id, name, department_id)' },
-    { query: 'Department(id, name, address)' },
-    { query: 'Salary_Payments(id, employee_id, amount, date)' },
-  ]);
-  const [desireQuery, setDesireQuery] = useState(
-    'A query to list the names of the departments which employed more than 10 employees in the last 3 months'
-  );
+  const [tableInputs, setTableInputs] = useState([{ query: '' }]);
+  const [desireQuery, setDesireQuery] = useState('');
   const [result, setResult] = useState('');
   const [busy, setBusy] = useState(false);
 
   const addRow = () => {
     setTableInputs([...tableInputs, { query: '' }]);
+  };
+
+  const deleteRow = (idx) => {
+    const _tableInputs = [...tableInputs];
+    if (idx > -1) {
+      _tableInputs.splice(idx, 1);
+    }
+    setTableInputs(_tableInputs);
   };
 
   const onTableInputChange = (e, idx) => {
@@ -55,6 +57,11 @@ export default function SqlTableInputs() {
             tableInputs.map((item, idx) => {
               return (
                 <InputGroup className="mb-3">
+                  {idx > 0 && (
+                    <Button onClick={() => deleteRow(idx)} variant="danger">
+                      X
+                    </Button>
+                  )}
                   <InputGroup.Text>Table 0{idx + 1}</InputGroup.Text>
                   <Form.Control
                     value={item.query}
