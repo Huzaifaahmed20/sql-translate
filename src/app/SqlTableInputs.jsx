@@ -85,7 +85,11 @@ export default function SqlTableInputs() {
           />
         </Col>
       </Row>
-      <Button className="mb-5" disabled={busy} onClick={handleSubmit}>
+      <Button
+        className="mb-5 w-25 ms-auto"
+        disabled={busy}
+        onClick={handleSubmit}
+      >
         {busy && <Spinner size="sm" />}{' '}
         {busy ? 'Generating output ...' : 'Submit'}
       </Button>
