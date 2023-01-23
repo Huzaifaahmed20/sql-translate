@@ -28,7 +28,7 @@ export default function SqlTableInputs() {
   };
 
   const handleSubmit = async () => {
-    const _desireQuery = `### ${desireQuery}`;
+    const _desireQuery = `### query ${desireQuery}`;
     const _tableInputs = tableInputs.map((i) => {
       return `### ${i.query}\n`;
     });

@@ -6,8 +6,6 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function handler(req, res) {
-  console.log('IN SERVE');
-
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -19,11 +17,11 @@ export default async function handler(req, res) {
   }
 
   const { tableInputs, desiredQuery } = req.body;
-
+  const prompt = `### Postgres SQL tables, with their properties:\n#${tableInputs}${desiredQuery}`;
   try {
     const completion = await openai.createCompletion({
       model: 'code-davinci-002',
-      prompt: `${tableInputs}${desiredQuery}`,
+      prompt,
       temperature: 0,
       max_tokens: 150,
       top_p: 1.0,
